@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="Survive!">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../../../Downloads/eclipse"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Slick.userclasspath">
+        <pathelement location="../../slick/lib/lwjgl.jar"/>
+        <pathelement location="../../slick/lib/slick.jar"/>
+        <pathelement location="../../KryoNet/jars/production/asm-4.0.jar"/>
+        <pathelement location="../../KryoNet/jars/production/jsonbeans-0.5.jar"/>
+        <pathelement location="../../KryoNet/jars/production/objenesis-1.2.jar"/>
+        <pathelement location="../../KryoNet/jars/production/reflectasm-1.07.jar"/>
+        <pathelement location="../../../../Downloads/guava-16.0.jar"/>
+    </path>
+    <path id="KryoNet.userclasspath">
+        <pathelement location="../../KryoNet/jars/debug/asm-4.0.jar"/>
+        <pathelement location="../../KryoNet/jars/debug/jsonbeans-0.5.jar"/>
+        <pathelement location="../../KryoNet/jars/debug/kryo-debug-2.20.jar"/>
+        <pathelement location="../../KryoNet/jars/debug/kryonet-debug-2.21.jar"/>
+        <pathelement location="../../KryoNet/jars/debug/minlog-1.2.jar"/>
+        <pathelement location="../../KryoNet/jars/debug/objenesis-1.2.jar"/>
+        <pathelement location="../../KryoNet/jars/debug/reflectasm-1.07.jar"/>
+    </path>
+    <path id="Survive!.classpath">
+        <pathelement location="bin"/>
+        <path refid="Slick.userclasspath"/>
+        <path refid="KryoNet.userclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Survive!.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="EntryPoint">
+        <java classname="noahp78.survive.EntryPoint" failonerror="true" fork="yes">
+            <classpath refid="Survive!.classpath"/>
+        </java>
+    </target>
+    <target name="main (1)">
+        <java classname="noahp78.survive.server.main" failonerror="true" fork="yes">
+            <classpath refid="Survive!.classpath"/>
+        </java>
+    </target>
+    <target name="main - client (1)">
+        <java classname="noahp78.survive.client.main" failonerror="true" fork="yes">
+            <arg line="client noah IffmewhLw5DIYgQ 127.0.0.1 1245 1"/>
+            <classpath refid="Survive!.classpath"/>
+        </java>
+    </target>
+    <target name="main - client">
+        <java classname="noahp78.survive.client.main" failonerror="true" fork="yes">
+            <arg line="client noah IffmewhLw5DIYgQ"/>
+            <classpath refid="Survive!.classpath"/>
+        </java>
+    </target>
+    <target name="serverStart">
+        <java classname="noahp78.survive.server.serverStart" failonerror="true" fork="yes">
+            <classpath refid="Survive!.classpath"/>
+        </java>
+    </target>
+</project>
